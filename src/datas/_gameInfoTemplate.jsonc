@@ -1,0 +1,186 @@
+{
+	"accountId": 4007457091,
+	"games": {
+		"gameBeginDate": "",
+		"gameCount": 163,
+		"gameEndDate": "",
+		"gameIndexBegin": 0,
+		"gameIndexEnd": 1,
+		"games": [
+			{
+				"gameCreation": 1676127354117,
+				"gameCreationDate": "2023-02-11T14:55:54.117Z",
+				"gameDuration": 902,
+				"gameId": 560383813,
+				"gameMode": "ARAM",
+				"gameType": "MATCHED_GAME",
+				"gameVersion": "13.1.487.9641",
+				"mapId": 12,
+				"participantIdentities": [
+					{
+						"participantId": 0,
+						"player": {
+							"accountId": 4007457091,
+							"currentAccountId": 4007457091,
+							"currentPlatformId": "BGP1",
+							"matchHistoryUri": "/v1/stats/player_history/BGP1/4007457091",
+							"platformId": "BGP1",
+							"profileIcon": 5411,
+							"summonerId": 4007457091,
+							"summonerName": "咸鱼养殖塘"
+						}
+					}
+				],
+				"participants": [
+					{
+						"championId": 10,
+						"highestAchievedSeasonTier": "",
+						"participantId": 0,
+						"spell1Id": 21,
+						"spell2Id": 4,
+						"stats": {
+							"assists": 29,
+							"causedEarlySurrender": false,
+							"champLevel": 15,
+							"combatPlayerScore": 0,
+							"damageDealtToObjectives": 2581,
+							"damageDealtToTurrets": 2581,
+							"damageSelfMitigated": 8188,
+							"deaths": 6,
+							"doubleKills": 0,
+							"earlySurrenderAccomplice": false,
+							"firstBloodAssist": false,
+							"firstBloodKill": false,
+							"firstInhibitorAssist": false,
+							"firstInhibitorKill": false,
+							"firstTowerAssist": true,
+							"firstTowerKill": false,
+							"gameEndedInEarlySurrender": false,
+							"gameEndedInSurrender": true,
+							"goldEarned": 11908,
+							"goldSpent": 10600,
+							"inhibitorKills": 0,
+							"item0": 3184,
+							"item1": 1036,
+							"item2": 6672,
+							"item3": 3153,
+							"item4": 3006,
+							"item5": 3086,
+							"item6": 2052,
+							"killingSprees": 1,
+							"kills": 7,
+							"largestCriticalStrike": 426,
+							"largestKillingSpree": 4,
+							"largestMultiKill": 1,
+							"longestTimeSpentLiving": 266,
+							"magicDamageDealt": 14956,
+							"magicDamageDealtToChampions": 6801,
+							"magicalDamageTaken": 12112,
+							"neutralMinionsKilled": 0,
+							"neutralMinionsKilledEnemyJungle": 0,
+							"neutralMinionsKilledTeamJungle": 0,
+							"objectivePlayerScore": 0,
+							"participantId": 0,
+							"pentaKills": 0,
+							"perk0": 8008,
+							"perk0Var1": 87,
+							"perk0Var2": 4,
+							"perk0Var3": 0,
+							"perk1": 8009,
+							"perk1Var1": 2944,
+							"perk1Var2": 0,
+							"perk1Var3": 0,
+							"perk2": 9103,
+							"perk2Var1": 6,
+							"perk2Var2": 40,
+							"perk2Var3": 0,
+							"perk3": 8014,
+							"perk3Var1": 635,
+							"perk3Var2": 0,
+							"perk3Var3": 0,
+							"perk4": 8135,
+							"perk4Var1": 550,
+							"perk4Var2": 5,
+							"perk4Var3": 0,
+							"perk5": 8138,
+							"perk5Var1": 18,
+							"perk5Var2": 0,
+							"perk5Var3": 0,
+							"perkPrimaryStyle": 8000,
+							"perkSubStyle": 8100,
+							"physicalDamageDealt": 35668,
+							"physicalDamageDealtToChampions": 12247,
+							"physicalDamageTaken": 6724,
+							"playerScore0": 0,
+							"playerScore1": 0,
+							"playerScore2": 0,
+							"playerScore3": 0,
+							"playerScore4": 0,
+							"playerScore5": 0,
+							"playerScore6": 0,
+							"playerScore7": 0,
+							"playerScore8": 0,
+							"playerScore9": 0,
+							"quadraKills": 0,
+							"sightWardsBoughtInGame": 0,
+							"teamEarlySurrendered": false,
+							"timeCCingOthers": 3,
+							"totalDamageDealt": 53149,
+							"totalDamageDealtToChampions": 20792,
+							"totalDamageTaken": 20083,
+							"totalHeal": 6419,
+							"totalMinionsKilled": 46,
+							"totalPlayerScore": 0,
+							"totalScoreRank": 0,
+							"totalTimeCrowdControlDealt": 65,
+							"totalUnitsHealed": 6,
+							"tripleKills": 0,
+							"trueDamageDealt": 2524,
+							"trueDamageDealtToChampions": 1743,
+							"trueDamageTaken": 1246,
+							"turretKills": 1,
+							"unrealKills": 0,
+							"visionScore": 0,
+							"visionWardsBoughtInGame": 0,
+							"wardsKilled": 0,
+							"wardsPlaced": 0,
+							"win": true
+						},
+						"teamId": 100,
+						"timeline": {
+							"creepsPerMinDeltas": {
+								"0-10": 2.6
+							},
+							"csDiffPerMinDeltas": {
+								"0-10": 0.3599999999999999
+							},
+							"damageTakenDiffPerMinDeltas": {
+								"0-10": 70.56000000000012
+							},
+							"damageTakenPerMinDeltas": {
+								"0-10": 839.1
+							},
+							"goldPerMinDeltas": {
+								"0-10": 655
+							},
+							"lane": "NONE",
+							"participantId": 0,
+							"role": "DUO_SUPPORT",
+							"xpDiffPerMinDeltas": {
+								"0-10": 41.98000000000013
+							},
+							"xpPerMinDeltas": {
+								"0-10": 756.1
+							}
+						}
+					}
+				],
+				"platformId": "BGP1",
+				"queueId": 450,
+				"seasonId": 0,
+				"teams": []
+			}
+		]
+	},
+	"platformId": "BGP1"
+}

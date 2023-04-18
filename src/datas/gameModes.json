@@ -1,0 +1,82 @@
+[
+    {
+        "gameMode": "CLASSIC",
+        "description": "经典召唤师峡谷和扭曲丛林游戏"
+    },
+    {
+        "gameMode": "ODIN",
+        "description": "统治/水晶之痕游戏"
+    },
+    {
+        "gameMode": "ARAM",
+        "description": "大乱斗游戏"
+    },
+    {
+        "gameMode": "TUTORIAL",
+        "description": "教程游戏"
+    },
+    {
+        "gameMode": "URF",
+        "description": "无限乱斗"
+    },
+    {
+        "gameMode": "DOOMBOTSTEEMO",
+        "description": "末日人机"
+    },
+    {
+        "gameMode": "ONEFORALL",
+        "description": "One for All games"
+    },
+    {
+        "gameMode": "ASCENSION",
+        "description": "提升游戏"
+    },
+    {
+        "gameMode": "FIRSTBLOOD",
+        "description": "冰雪决战游戏"
+    },
+    {
+        "gameMode": "KINGPORO",
+        "description": "魄罗大乱斗"
+    },
+    {
+        "gameMode": "SIEGE",
+        "description": "Nexus Siege games"
+    },
+    {
+        "gameMode": "ASSASSINATE",
+        "description": "(腥红之月?)Blood Hunt Assassin games"
+    },
+    {
+        "gameMode": "ARSR",
+        "description": "所有随机召唤师峡谷游戏"
+    },
+    {
+        "gameMode": "DARKSTAR",
+        "description": "死兆星:奇点游戏"
+    },
+    {
+        "gameMode": "STARGUARDIAN",
+        "description": "星之守护者入侵游戏"
+    },
+    {
+        "gameMode": "PROJECT",
+        "description": "PROJECT: Hunters games"
+    },
+    {
+        "gameMode": "GAMEMODEX",
+        "description": "Nexus Blitz games"
+    },
+    {
+        "gameMode": "ODYSSEY",
+        "description": "Odyssey: Extraction games"
+    },
+    {
+        "gameMode": "NEXUSBLITZ",
+        "description": "Nexus Blitz games"
+    },
+    {
+        "gameMode": "ULTBOOK",
+        "description": "Ultimate Spellbook games"
+    }
+]
