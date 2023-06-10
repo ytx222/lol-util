@@ -3,7 +3,8 @@ import http from 'http';
 import https from 'https';
 import { baseUrl } from './config';
 import { RequestArgs } from './types/types';
-import { toQueryString } from './util';
+import { relativeFilePath, toQueryString } from './util';
+import fs from 'fs';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // 创建忽略 SSL 的 axios 实例
@@ -19,13 +20,21 @@ export default request;
  * @param {RequestArgs} opts
  * @returns
  */
-export function request(opts: RequestArgs) {
+export async function request(opts: RequestArgs) {
 	const url = `${baseUrl}${opts.path}${toQueryString(opts.parms)}`;
 	console.log(url);
-	return axios.request({
-		url: url,
-		method: opts.method ?? 'POST',
-	});
+	try {
+		return await axios.request({
+			url: url,
+			method: opts.method ?? 'POST',
+		});
+	} catch (error) {
+		// 一直往控制台打印一下子太长了,这里不打印到控制台了,直接输出到文件
+		fs.writeFileSync(relativeFilePath('./../err.log.json'), JSON.stringify(error));
+		let err = new Error();
+		err.message = '出错了,错误信息已经保存到/err.log\n原错误message====\n' + error;
+		throw err;
+	}
 }
 
 /**

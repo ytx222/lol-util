@@ -1,15 +1,14 @@
-import { getAllGameRecord,  getUserInfo as getUserInfoApi } from './api';
+import { getAllGameRecord, getUserInfo as getUserInfoApi } from './api';
 import { heros } from './datas/heros';
 // @ts-ignore
 import XLSX from 'xlsx';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { formatNumber, formatTime } from './util';
+import { formatNumber, formatTime, relativeFilePath } from './util';
 import { Statistics } from './statistics';
 import { GameData, GameDataKey } from './types/types';
-
-
+import { Path } from 'typescript';
 
 /**
  * 获取玩家信息
@@ -21,10 +20,10 @@ export async function getUserInfo(name: string) {
 	return {
 		summonerId: user.summonerId,
 		name: user.displayName,
+		puuid: user.puuid,
+		level: user.summonerLevel,
 	};
 }
-
-
 
 export function parseGameRecord(gameRecord: any): GameData | null {
 	let date = gameRecord.gameCreationDate;
@@ -84,7 +83,7 @@ export function parseGameRecord(gameRecord: any): GameData | null {
 	};
 }
 
-export  function dataToArray(data: GameData[]): (string | number | undefined)[][] {
+export function dataToArray(data: GameData[]): (string | number | undefined)[][] {
 	const k_names = {
 		时间: 'date',
 		英雄: 'heroName',
@@ -126,7 +125,7 @@ export  function dataToArray(data: GameData[]): (string | number | undefined)[][
 }
 
 // data 转换成excel
-export function exportTable(arr: any[][],userName:string) {
+export function exportTable(arr: any[][], userName: string, toPath?: string) {
 	const workbook = XLSX.utils.book_new();
 	// console.log(arr);
 	const worksheet = XLSX.utils.aoa_to_sheet(arr);
@@ -144,9 +143,9 @@ export function exportTable(arr: any[][],userName:string) {
 	// XLSX.writeFile(workbook, name, { compression: true });
 	const bin = XLSX.write(workbook, { type: 'binary', compression: true });
 
-	const __filename = fileURLToPath(import.meta.url);
-	const __dirname = path.dirname(__filename);
-	// console.warn(__dirname);
-	console.log(path.resolve(__dirname, '../result/', name));
-	fs.writeFileSync(path.resolve(__dirname, '../result/', name), bin, { encoding: 'binary' });
+	toPath ??= relativeFilePath('../result/');
+	// console.log({ toPath });
+	const _toFile = path.resolve(toPath, name);
+	// console.log(_toFile);
+	fs.writeFileSync(_toFile, bin, { encoding: 'binary' });
 }

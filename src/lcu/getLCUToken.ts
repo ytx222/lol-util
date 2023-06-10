@@ -37,7 +37,7 @@ export async function getToken() {
 
 	const fileName = path.join(logPath, newLog);
 	const fileContent = fs.readFileSync(fileName, { encoding: 'utf-8' });
-	console.log(fileContent.substring(0,1024 * 6));
+	// console.log(fileContent.substring(0,1024 * 6));
 	let tokenInfo = fileContent.match(tokenRegex);
 	if (!tokenInfo) return null;
 	const [, token, port] = tokenInfo!;

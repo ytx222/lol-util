@@ -102,5 +102,8 @@
   },
   "include": [
     "./index.d.ts"
+  ],
+  "exclude": [
+    "webpack.config.js"
   ]
 }

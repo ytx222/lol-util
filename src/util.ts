@@ -1,3 +1,6 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 /**
  * 用于动态设置key的
  */
@@ -114,4 +117,10 @@ export function formatDate(date: Date | '--') {
 export function formatNumber(v: number) {
 	const num = v.toString();
 	return num[1] ? num : '0' + num;
+}
+
+export function relativeFilePath(_path: string) {
+	const __filename = fileURLToPath(import.meta.url);
+	const __dirname = path.dirname(__filename);
+	return path.resolve(__dirname, _path);
 }
