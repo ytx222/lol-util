@@ -3,13 +3,16 @@
 	 - 目前只有查询战绩并保存为excel,并自动计算一些平均数据的功能
 	 - 战绩查询后筛选了只查询大乱斗战绩,可以在代码中直接去掉筛选代码或修改为其他模式
 	 - 可以查询最近的一千条战绩!!
-	 - 无视
+	 - 没有隐私限制,谁的战绩都可以查询
 - 如何使用
-	- npm run build之后直接使用node运行/dist 下的除了
-	scripts下的任意js
-	-
-/src内部的可以不用管,可以直接使用node执行
+	- 先安装依赖 npm i
+	- 由于是基于lcu api的,所以需要先登陆游戏客户端
+	- npm run build 之后直接使用node运行/dist 下的任意js
+	- 在修改/scripts下的文件后直接使用npm run ... 命令运行
+	- 文件会自动保存到/backup
 - 一些操作可能比较low,但是基于个人水平以及国服特色,只能这样了
 	- 比如获取客户端api接口是从客户端日志文件里面读的
 	- 客户端安装目录是通过注册表获取的
 - 鸣谢
+	- https://github.com/HextechDocs/lcu-explorer
+	- https://github.com/MarioCrane/LeagueLobby
