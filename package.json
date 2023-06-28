@@ -24,6 +24,7 @@
     "iconv-lite": "^0.6.3",
     "is-elevated": "^4.0.0",
     "node-pty": "^1.0.0",
-    "ps-node": "^0.1.6"
+    "ps-node": "^0.1.6",
+    "sudo-prompt": "^9.2.1"
   }
 }
