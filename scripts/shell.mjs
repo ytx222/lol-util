@@ -1,8 +1,6 @@
 import isElevated from 'is-elevated';
 import { execSync, exec, spawn } from 'child_process';
 import pty from 'node-pty';
-import os from 'os';
-import ps from 'ps-node';
 import iconv from 'iconv-lite';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -15,41 +13,81 @@ function relativeFilePath(_path) {
 }
 
 const processName = 'League of Legends.exe';
-// const processName = 'Everything.exe';
-const fileName = 'Everything.exe';
-// toSudo(() => {
-	// setpriority(5248);
-	let pid = getProcessId(processName, fileName);
+const fileName = 'League of Legends.exe';
+// const timeBase = 60;
+let timeBase = 6;
 
-	if (pid ) {
+// const processName = 'Everything.exe';
+// const fileName = 'Everything.exe';
+toSudo(() => {
+	task();
+	//
+});
+// 查找wegame进程
+// tasklist | findstr "LeagueClient.exe"
+// tasklist | findstr "League of Legends.exe"
+
+function task() {
+	let { pid, status } = {};
+	try {
+		({ pid, status } = getProcessId(processName, fileName));
+	} catch (e) {
+		console.log('....查询lol进程失败');
+	}
+	console.log({ pid, status,time:new Date().toLocaleString('zh-CN') });
+	//status = 2 时才可能会有pid
+	if (pid) {
 		let priority = getPriority(pid);
-		if (priority <= 24) {
+		if (priority < 24) {
 			// 提升优先级
-			// setpriority(pid, 32);
+			setpriority(pid, 256);
 		} else {
 			// 优先级够大了或者拿不到优先级,啥都不做
+			// timeBase = 60
 		}
+		next(1);
+	} else if (status === 1) {
+		// 没有pid,但是找到了lol相关进程
+		next(0.5);
+	} else {
+		// 没有lol相关进程 3分钟
+		console.log('没有lol相关进程 3分钟');
+		next(3);
 	}
-// });
+}
+
+const next = m => {
+	console.log(`等待 ${m * timeBase} 秒\n\n`);
+	setTimeout(task, 1000 * timeBase * m);
+};
 //
 
 // getProcessId(processName)
-function getProcessId (name, filterName) {
+function getProcessId(name, filterName) {
 	console.log(`tasklist | findstr "${name}"`);
 	const command = `tasklist | findstr "${name}"`;
 	let res = execSync(command);
+	// console.log(1111);
 	let t = res.toString();
-	console.log(t);
+	// console.log(t);
 	// console.log(t);
 	let item = t.split('\n').find(e => e.startsWith(filterName));
-	// console.log(item);
+	console.log(item);
 	if (item) {
-		let t = item.split(/[\s\r]+/);
-		let pid = t[1];
-		return pid || -1;
+		// 名称中会有空格,直接去掉 懒得用正则
+		// League of Legends.exe
+		// League of Legends.exe        30644 Console                    1  1,457,368 K
+		item = item.replace(name, '');
+		let t = item.split(/[\s\r]+/).filter(Boolean);
+		// console.log(t);
+		let pid = t[0];
+		return { pid, status: 2 };
 
 		// console.log(pid);
+	} else if (t.includes('LeagueClient.exe')) {
+		return { status: 1 };
 	}
+	return { status: 0 };
 
 	// getPriority(2864);
 }
@@ -92,10 +130,16 @@ function setpriority(pid, priority) {
 	const command = `wmic process where "ProcessId=${pid}"  call setpriority ${priority}`;
 	let res = execSync(command);
 	console.log('====setpriority');
-	console.warn(res.toString());
+	// console.warn(res.toString());
 }
 
+/**
+ * toSudo方法看起来是异步获取了管理员权限,但其实不是,
+ * 如果没有管理员权限,会停止运行并重新以管理员权限运行脚本
+ * @param {*} callback
+ */
 function toSudo(callback) {
+	console.log('toSudo');
 	isElevated().then(elevated => {
 		if (elevated) {
 			console.log('当前进程以管理员权限运行。');

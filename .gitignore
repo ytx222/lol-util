@@ -6,3 +6,5 @@ backup/
 err.log.json
 .vscode/
 README.local.MD
+
+*.lnk
