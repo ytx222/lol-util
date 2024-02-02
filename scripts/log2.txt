@@ -1,0 +1,55 @@
+[2024/2/3 00:54:51] pid:40748 - tasklist | findstr "League of Legends.exe"
+League of Legends.exe        39732 Console                    1  1,500,672 K
+
+[2024/2/3 00:54:51] pid:40748 - 进程 39732 的优先级: 24
+[2024/2/3 00:54:51] pid:40748 - {"pid":"39732","status":2,"进程":"39732","优先级":24} - 等待 4 秒
+[2024/2/3 00:54:55] pid:40748 - tasklist | findstr "League of Legends.exe"
+League of Legends.exe        39732 Console                    1  1,500,672 K
+
+[2024/2/3 00:54:56] pid:40748 - 进程 39732 的优先级: 24
+[2024/2/3 00:54:56] pid:40748 - {"pid":"39732","status":2,"进程":"39732","优先级":24} - 等待 4 秒
+[2024/2/3 00:55:00] pid:40748 - tasklist | findstr "League of Legends.exe"
+League of Legends.exe        39732 Console                    1  1,501,540 K
+
+[2024/2/3 00:55:00] pid:40748 - 进程 39732 的优先级: 24
+[2024/2/3 00:55:00] pid:40748 - {"pid":"39732","status":2,"进程":"39732","优先级":24} - 等待 4 秒
+[2024/2/3 00:55:05] pid:40748 - tasklist | findstr "League of Legends.exe"
+League of Legends.exe        39732 Console                    1  1,501,540 K
+
+[2024/2/3 00:55:05] pid:40748 - 进程 39732 的优先级: 24
+[2024/2/3 00:55:05] pid:40748 - {"pid":"39732","status":2,"进程":"39732","优先级":24} - 等待 4 秒
+[2024/2/3 00:55:09] pid:40748 - tasklist | findstr "League of Legends.exe"
+League of Legends.exe        39732 Console                    1  1,501,540 K
+
+[2024/2/3 00:55:09] pid:40748 - 进程 39732 的优先级: 24
+[2024/2/3 00:55:09] pid:40748 - {"pid":"39732","status":2,"进程":"39732","优先级":24} - 等待 4 秒
+[2024/2/3 00:55:14] pid:40748 - tasklist | findstr "League of Legends.exe"
+League of Legends.exe        39732 Console                    1  1,502,036 K
+
+[2024/2/3 00:55:14] pid:40748 - 进程 39732 的优先级: 24
+[2024/2/3 00:55:14] pid:40748 - {"pid":"39732","status":2,"进程":"39732","优先级":24} - 等待 4 秒
+[2024/2/3 00:55:18] pid:40748 - tasklist | findstr "League of Legends.exe"
+League of Legends.exe        39732 Console                    1  1,503,320 K
+
+[2024/2/3 00:55:19] pid:40748 - 进程 39732 的优先级: 24
+[2024/2/3 00:55:19] pid:40748 - {"pid":"39732","status":2,"进程":"39732","优先级":24} - 等待 4 秒
+[2024/2/3 00:55:23] pid:40748 - tasklist | findstr "League of Legends.exe"
+League of Legends.exe        39732 Console                    1  1,502,036 K
+
+[2024/2/3 00:55:23] pid:40748 - 进程 39732 的优先级: 24
+[2024/2/3 00:55:23] pid:40748 - {"pid":"39732","status":2,"进程":"39732","优先级":24} - 等待 4 秒
+[2024/2/3 00:55:28] pid:40748 - tasklist | findstr "League of Legends.exe"
+League of Legends.exe        39732 Console                    1  1,502,036 K
+
+[2024/2/3 00:55:28] pid:40748 - 进程 39732 的优先级: 24
+[2024/2/3 00:55:28] pid:40748 - {"pid":"39732","status":2,"进程":"39732","优先级":24} - 等待 4 秒
+[2024/2/3 00:55:32] pid:40748 - tasklist | findstr "League of Legends.exe"
+League of Legends.exe        39732 Console                    1  1,502,036 K
+
+[2024/2/3 00:55:32] pid:40748 - 进程 39732 的优先级: 24
+[2024/2/3 00:55:32] pid:40748 - {"pid":"39732","status":2,"进程":"39732","优先级":24} - 等待 4 秒
+[2024/2/3 00:55:37] pid:40748 - tasklist | findstr "League of Legends.exe"
+League of Legends.exe        39732 Console                    1  1,502,052 K
+
+[2024/2/3 00:55:37] pid:40748 - 进程 39732 的优先级: 24
+[2024/2/3 00:55:37] pid:40748 - {"pid":"39732","status":2,"进程":"39732","优先级":24} - 等待 4 秒

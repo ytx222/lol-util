@@ -6,6 +6,93 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import sudo from 'sudo-prompt';
 
+import log4js from 'log4js';
+
+const _logger = log4js.getLogger();
+const _fileLogger = log4js.getLogger('file');
+const log = {
+	info: (...args) => _logger.info(...args),
+	debug:(...args) => _fileLogger.debug(...args),
+}
+log4js.addLayout('info', function () {
+	return function (logEvent) {
+		// console.log({ logEvent });
+		const date = new Date(logEvent.startTime);
+		return `[${date.toLocaleString()}] pid:${logEvent.pid} - ${
+			[...logEvent.data]
+				.map(e => {
+					return typeof e === 'object' ? JSON.stringify(e) : e;
+				})
+				.join(' - ')
+
+			//
+		}`;
+	};
+});
+log4js.configure({
+	appenders: {
+		// 输出到文件的输出器
+		file: {
+			type: 'fileSync',
+			filename: relativeFilePath('log4.txt'),
+			// 100 mb
+			maxLogSize: 1024 * 1024 * 100,
+			backups: 3,
+			layout: { type: 'info' },
+		},
+		// 输出到控制台
+		console: {
+			type: 'console',
+			layout: { type: 'info' },
+		},
+		// 输出
+		// format: { type: "stdout", layout: { type: "basic" } }
+	},
+	categories: {
+		default: {
+			appenders: ['file', 'console'],
+			level: 'info',
+		},
+		file: {
+			appenders: ['file'],
+			level: 'debug',
+		},
+	},
+
+	// pm2: true,
+	// disableClustering: true,
+});
+// log4js.shutdown(() => {
+// 	// logger.warn('程序关闭');
+// 	console.log('111111');
+// 	return 0
+// });
+
+// import winston from 'winston';
+
+// const logger = winston.createLogger({
+//   level: 'info',
+//   format: winston.format.json(),
+//   defaultMeta: { service: 'user-service' },
+//   transports: [
+//     new winston.transports.File({ filename: 'error.log', level: 'error' }),
+//     new winston.transports.File({ filename: relativeFilePath('log.txt') }),
+//   ],
+// });
+
+// //
+// // If we're not in production then log to the `console` with the format:
+// // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
+// //
+// if (process.env.NODE_ENV !== 'production') {
+//   logger.add(new winston.transports.Console({
+//     format: winston.format.simple(),
+//   }));
+// }
+
+// logger.info('1111')
+// logger.warn(relativeFilePath('log.txt'))
+
 function relativeFilePath(_path) {
 	const __filename = fileURLToPath(import.meta.url);
 	const __dirname = path.dirname(__filename);
@@ -14,7 +101,7 @@ function relativeFilePath(_path) {
 
 const processName = 'League of Legends.exe';
 const fileName = 'League of Legends.exe';
-const timeBase = 60;
+const timeBase = 2;
 // 没有打开客户端 x3
 let noLCUTimes = 1;
 // 打开了客户端,但是没有进入游戏 x0.5
@@ -26,27 +113,34 @@ const getTimeBase = () => timeBase * noLCUTimes * noGameBase;
 
 // const processName = 'Everything.exe';
 // const fileName = 'Everything.exe';
-toSudo(() => {
-	task();
-	//
-});
+
 //TODO:如果没找到lol游戏进程,时间*5
 // 查找wegame进程
 // tasklist | findstr "LeagueClient.exe"
 // tasklist | findstr "League of Legends.exe"
+
+var nextSec = 0;
 
 function task() {
 	let { pid, status } = {};
 	try {
 		({ pid, status } = getProcessId(processName, fileName));
 	} catch (e) {
-		// console.log(e);
-		console.log('....查询lol进程失败');
+		// logger.info(e);
+		log.info('....查询lol进程失败');
 	}
-	console.log({ pid, status, time: new Date().toLocaleString('zh-CN') });
+
+	const loggerObj = {
+		pid: pid || '-',
+		status,
+	};
+
 	//status = 2 时才可能会有pid
 	if (pid) {
 		let priority = getPriority(pid);
+		loggerObj['进程'] = pid;
+		loggerObj['优先级'] = priority;
+
 		if (priority < 24) {
 			// 提升优先级
 			setpriority(pid, 256);
@@ -60,14 +154,18 @@ function task() {
 		next(1);
 	} else {
 		// 没有lol相关进程 3分钟
-		// console.log('没有lol相关进程 3分钟');
+		// log.info('没有lol相关进程 3分钟');
 		next(6);
 	}
+
+
+	log.info(loggerObj, `等待 ${nextSec} 秒`);
 }
 
 const next = m => {
-	console.log(`等待 ${m * timeBase} 秒\n`);
-	setTimeout(task, 1000 * timeBase * m);
+	// log.info(`等待 ${} 秒\n`);
+	nextSec = m * timeBase;
+	setTimeout(task, 1000 * nextSec);
 };
 //
 
@@ -75,22 +173,22 @@ const next = m => {
 function getProcessId(name, filterName) {
 	const command = `tasklist | findstr "${name}"`;
 	let res = execSync(command);
-	// console.log(1111);
+	// log.info(1111);
 	let t = res.toString();
-	// console.log(t);
+	// log.info(t);
 	let item = t.split('\n').find(e => e.startsWith(filterName));
-	item && console.log(`tasklist | findstr "${name}\n${item}"`);
+	item && log.debug(`tasklist | findstr "${name}"\n${item?.trim()}\n`);
 	if (item) {
 		// 名称中会有空格,直接去掉 懒得用正则
 		// League of Legends.exe
 		// League of Legends.exe        30644 Console                    1  1,457,368 K
 		item = item.replace(name, '');
 		let t = item.split(/[\s\r]+/).filter(Boolean);
-		// console.log(t);
+		// log.info(t);
 		let pid = t[0];
 		return { pid, status: 2 };
 
-		// console.log(pid);
+		// log.info(pid);
 	} else if (t.includes('LeagueClient.exe')) {
 		return { status: 1 };
 	}
@@ -104,7 +202,7 @@ function getPriority(processId) {
 	const priorityLine = outputLines[1] || ''; // 第二行包含优先级信息
 	const priority = priorityLine?.trim?.();
 
-	console.log(`进程 ${processId} 的优先级: ${priority}`);
+	log.debug(`进程 ${processId} 的优先级: ${priority}`);
 	if (priority && priority == +priority) {
 		return +priority;
 	}
@@ -131,7 +229,7 @@ function getPriority(processId) {
 function setpriority(pid, priority) {
 	const command = `wmic process where "ProcessId=${pid}"  call setpriority ${priority}`;
 	let res = execSync(command);
-	console.log('====setpriority');
+	log.info('====setpriority');
 }
 
 /**
@@ -140,25 +238,29 @@ function setpriority(pid, priority) {
  * @param {*} callback
  */
 function toSudo(callback) {
-	console.log('toSudo');
+	log.info('toSudo');
 	isElevated().then(elevated => {
 		if (elevated) {
-			console.log('当前进程以管理员权限运行。');
+			log.info('当前进程以管理员权限运行。');
 			callback();
 		} else {
-			console.log('当前进程没有管理员权限。');
-			// console.log('./elevate.exe /k /u "node ./sheel.mjs"');
+			log.info('当前进程没有管理员权限。');
+			// log.info('./elevate.exe /k /u "node ./sheel.mjs"');
 			sudo.exec(
 				`node ${relativeFilePath('shell.mjs')}`,
 				{ name: 'ytx222 lol util' },
 				function (error, stdout, stderr) {
 					if (error) throw error;
 					// 当前进程结束后才能获取到返回的值
-					console.log('stdout: ' + stdout);
+					log.info('stdout: ' + stdout);
 				}
 			);
 		}
 	});
 }
 
-console.log('========================');
+log.info('======================== 程序启动');
+
+toSudo(() => {
+	task();
+});
