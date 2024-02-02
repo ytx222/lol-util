@@ -14,8 +14,15 @@ function relativeFilePath(_path) {
 
 const processName = 'League of Legends.exe';
 const fileName = 'League of Legends.exe';
-// const timeBase = 60;
-let timeBase = 6;
+const timeBase = 60;
+// 没有打开客户端 x3
+let noLCUTimes = 1;
+// 打开了客户端,但是没有进入游戏 x0.5
+let noGameBase = 1;
+
+const getTimeBase = () => timeBase * noLCUTimes * noGameBase;
+
+// let timeBase = 6;
 
 // const processName = 'Everything.exe';
 // const fileName = 'Everything.exe';
@@ -23,6 +30,7 @@ toSudo(() => {
 	task();
 	//
 });
+//TODO:如果没找到lol游戏进程,时间*5
 // 查找wegame进程
 // tasklist | findstr "LeagueClient.exe"
 // tasklist | findstr "League of Legends.exe"
@@ -32,9 +40,10 @@ function task() {
 	try {
 		({ pid, status } = getProcessId(processName, fileName));
 	} catch (e) {
+		// console.log(e);
 		console.log('....查询lol进程失败');
 	}
-	console.log({ pid, status,time:new Date().toLocaleString('zh-CN') });
+	console.log({ pid, status, time: new Date().toLocaleString('zh-CN') });
 	//status = 2 时才可能会有pid
 	if (pid) {
 		let priority = getPriority(pid);
@@ -45,34 +54,32 @@ function task() {
 			// 优先级够大了或者拿不到优先级,啥都不做
 			// timeBase = 60
 		}
-		next(1);
+		next(2);
 	} else if (status === 1) {
 		// 没有pid,但是找到了lol相关进程
-		next(0.5);
+		next(1);
 	} else {
 		// 没有lol相关进程 3分钟
-		console.log('没有lol相关进程 3分钟');
-		next(3);
+		// console.log('没有lol相关进程 3分钟');
+		next(6);
 	}
 }
 
 const next = m => {
-	console.log(`等待 ${m * timeBase} 秒\n\n`);
+	console.log(`等待 ${m * timeBase} 秒\n`);
 	setTimeout(task, 1000 * timeBase * m);
 };
 //
 
 // getProcessId(processName)
 function getProcessId(name, filterName) {
-	console.log(`tasklist | findstr "${name}"`);
 	const command = `tasklist | findstr "${name}"`;
 	let res = execSync(command);
 	// console.log(1111);
 	let t = res.toString();
 	// console.log(t);
-	// console.log(t);
 	let item = t.split('\n').find(e => e.startsWith(filterName));
-	console.log(item);
+	item && console.log(`tasklist | findstr "${name}\n${item}"`);
 	if (item) {
 		// 名称中会有空格,直接去掉 懒得用正则
 		// League of Legends.exe
@@ -88,18 +95,14 @@ function getProcessId(name, filterName) {
 		return { status: 1 };
 	}
 	return { status: 0 };
-
-	// getPriority(2864);
 }
 
 function getPriority(processId) {
-	// const processId = 15820; // 替换为实际的进程ID
-
 	const command = `wmic process where "ProcessId=${processId}" get Priority`;
 	let res = execSync(command);
 	const outputLines = res.toString().trim().split('\n');
-	const priorityLine = outputLines[1]; // 第二行包含优先级信息
-	const priority = priorityLine.trim();
+	const priorityLine = outputLines[1] || ''; // 第二行包含优先级信息
+	const priority = priorityLine?.trim?.();
 
 	console.log(`进程 ${processId} 的优先级: ${priority}`);
 	if (priority && priority == +priority) {
@@ -126,11 +129,9 @@ function getPriority(processId) {
 # 256 实时
  */
 function setpriority(pid, priority) {
-	console.log('setpriority');
 	const command = `wmic process where "ProcessId=${pid}"  call setpriority ${priority}`;
 	let res = execSync(command);
 	console.log('====setpriority');
-	// console.warn(res.toString());
 }
 
 /**
@@ -161,9 +162,3 @@ function toSudo(callback) {
 }
 
 console.log('========================');
-
-// const uint8Array = new Uint8Array([
-// 	202, 228, 200, 235, 32, 121, 116, 120, 32, 181, 196, 195, 220, 194, 235, 58, 32, 0, 13, 10,
-// ]);
-// const result = String.fromCharCode.apply(null, uint8Array);
-// console.log(result); // 输出: "Hello"
